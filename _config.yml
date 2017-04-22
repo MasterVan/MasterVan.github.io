@@ -85,8 +85,7 @@ backup:
   type: git
   message: update blog
   theme: next
-  repo: git@github.com:MasterVan/blogbackup.git
-  branch: master
+  repo: git@github.com:MasterVan/blogbackup.git,master
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
