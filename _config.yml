@@ -85,7 +85,7 @@ backup:
   type: git
   message: update blog
   theme: next
-  repo: http://github.com/MasterVan/MasterVan.github.io.git,backup
+  repo: git@github.com:MasterVan/MasterVan.github.io.git,backup
 
 
 # Deployment
