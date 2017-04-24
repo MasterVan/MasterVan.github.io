@@ -3,9 +3,16 @@
   
     
     <entry>
+      <title><![CDATA[特征工程]]></title>
+      <url>%2F2017%2F04%2F24%2F%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%2F</url>
+      <content type="text"><![CDATA[特征使用方案确定需要的数据需要相关业务知识和领域知识，尽可能找出对因变量有影响的所有自变量 可用性评估获取难度、覆盖率、准确率 特征获取方案获取方式系统或日志里的数据需要网上爬取的数据 存储方式文本格式、CSV格式、关系表、键值对数据库的选择：关系数据库（MySql，Oracle），Nosql数据库（mongoDB，Redis） 特征处理数据清洗 异常处理 数据采样 预处理单个特征 归一化 离散化 Dummy Coding 缺失值处理 数据变换 log 指数 Box-Cox 特征降维 特征抽取PCALDALLE拉普拉斯映射 特征选择FilterWapperEmbedded 特征组合对特征进行加工，生成线性、非线性组合，提高模型表现 特征监控特征有效性分析特征重要性，权重 特征监控防止特征质量下降，影响模型效果 Reference使用sklearn做单机特征工程]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Hexo个人博客搭建教程]]></title>
       <url>%2F2017%2F04%2F21%2FHexo%E6%90%AD%E5%BB%BA%2F</url>
-      <content type="text"><![CDATA[依赖包安装1. git安装在ubuntu系统下，直接在命令行输入1sudo apt-get install git-core 2. node.js安装直接从官网下载的预编译安装包，解压后需要设置全局变量，按着网上教程，最后在安装完Hexo后，系统找不到Hexo命令推荐使用Hexo官网的方法来，首先安装nvm cURL:1$ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh Wget:1$ wget -qO- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh 然后用nvm安装1$ nvm install stable 3. Hexo安装利用npm安装1$ npm install -g hexo-cli 初始化设置cd到博客安装的文件夹，执行12hexo initnpm install 可以看到博客初始化完成了，接着可以新建博客了，在博客根目录下执行1hexo new “My First Blog” 此时在 blog/source/_post/ 文件夹下生成了My First Blog.md文件，以后写博文都是在文件里进行的，然后执行12hexo generatehexo server 在浏览器打开 localhost://4000 可查看博客页面如果需要重新发布，按顺序执行123hexo cleanhexo ghexo s 初步搭建就完成了，下一步可进行个性化设置，比如主题更改和链接到Github]]></content>
+      <content type="text"><![CDATA[依赖包安装1. git安装在ubuntu系统下，直接在命令行输入1sudo apt-get install git-core 2. node.js安装直接从官网下载的预编译安装包，解压后需要设置全局变量，按着网上教程，最后在安装完Hexo后，系统找不到Hexo命令推荐使用Hexo官网的方法来，首先安装nvmcURL:1$ curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh Wget:1$ wget -qO- https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh 然后用nvm安装1$ nvm install stable 3. Hexo安装利用npm安装1$ npm install -g hexo-cli 初始化设置cd到博客安装的文件夹，执行12hexo initnpm install 可以看到博客初始化完成了，接着可以新建博客了，在博客根目录下执行1hexo new “My First Blog” 此时在 blog/source/_post/ 文件夹下生成了My First Blog.md文件，以后写博文都是在文件里进行的，然后执行12hexo generatehexo server 在浏览器打开 localhost://4000 可查看博客页面如果需要重新发布，按顺序执行123hexo cleanhexo ghexo s 初步搭建就完成了，下一步可进行个性化设置，比如主题更改和链接到Github]]></content>
     </entry>
 
     
