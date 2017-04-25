@@ -317,6 +317,255 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/kaggle实战——泰坦尼克号生还预测/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MasterVan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MasterVan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/25/kaggle实战——泰坦尼克号生还预测/" itemprop="url">
+                  Kaggle实战——泰坦尼克号生还预测
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T23:01:13+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据挖掘/" itemprop="url" rel="index">
+                    <span itemprop="name">数据挖掘</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/25/kaggle实战——泰坦尼克号生还预测/" class="leancloud_visitors" data-flag-title="Kaggle实战——泰坦尼克号生还预测">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>train.csv的属性有：</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>定义</th>
+<th>取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PassengerId</td>
+<td>乘客编号</td>
+<td>1-891</td>
+</tr>
+<tr>
+<td>Suvived</td>
+<td>生还情况</td>
+<td>0, 1</td>
+</tr>
+<tr>
+<td>Pclass</td>
+<td>票的等级</td>
+<td>1,2,3</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>乘客姓名</td>
+<td>Braund, Mr. Owen Harris</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>性别</td>
+<td>male，female</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>年龄</td>
+<td>数字，有缺失值</td>
+</tr>
+<tr>
+<td>SibSp</td>
+<td>兄弟姐妹/配偶在船上</td>
+<td>0-8</td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>父母/子女在船上</td>
+<td>0-6</td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>船票编号</td>
+<td>A/5 21171</td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>票价</td>
+<td>7.25</td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>船舱号</td>
+<td>C85，有缺失值</td>
+</tr>
+<tr>
+<td>Embark</td>
+<td>登船港</td>
+<td>S,C,Q</td>
+</tr>
+</tbody>
+</table>
+<p>test.csv缺少Survived字段，也是需要我们预测的</p>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> warnings</div><div class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">%matplotlib inline</div></pre></td></tr></table></figure>
+<h3 id="预览数据"><a href="#预览数据" class="headerlink" title="预览数据"></a>预览数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">train = pd.read_csv(<span class="string">"train.csv"</span>)</div><div class="line">test = pd.read_csv(<span class="string">'test.csv'</span>)</div><div class="line">train.info()</div></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 891 entries, 0 to 890
+Data columns (total 12 columns):
+PassengerId    891 non-null int64
+Survived       891 non-null int64
+Pclass         891 non-null int64
+Name           891 non-null object
+Sex            891 non-null object
+Age            714 non-null float64
+SibSp          891 non-null int64
+Parch          891 non-null int64
+Ticket         891 non-null object
+Fare           891 non-null float64
+Cabin          204 non-null object
+Embarked       889 non-null object
+dtypes: float64(2), int64(5), object(5)
+memory usage: 83.6+ KB
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/25/kaggle实战——泰坦尼克号生还预测/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/24/特征工程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -671,7 +920,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -693,7 +942,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

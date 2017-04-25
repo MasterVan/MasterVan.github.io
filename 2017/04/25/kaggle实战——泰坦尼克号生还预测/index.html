@@ -1,0 +1,1289 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Kaggle," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="数据分析train.csv的属性有：    属性名 定义 取值     PassengerId 乘客编号 1-891   Suvived 生还情况 0, 1   Pclass 票的等级 1,2,3   Name 乘客姓名 Braund, Mr. Owen Harris   Sex 性别 male，female   Age 年龄 数字，有缺失值   SibSp 兄弟姐妹/配偶在船上 0-8   Pa">
+<meta name="keywords" content="Kaggle">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kaggle实战——泰坦尼克号生还预测">
+<meta property="og:url" content="http://yoursite.com/2017/04/25/kaggle实战——泰坦尼克号生还预测/index.html">
+<meta property="og:site_name" content="MasterVan的个人博客">
+<meta property="og:description" content="数据分析train.csv的属性有：    属性名 定义 取值     PassengerId 乘客编号 1-891   Suvived 生还情况 0, 1   Pclass 票的等级 1,2,3   Name 乘客姓名 Braund, Mr. Owen Harris   Sex 性别 male，female   Age 年龄 数字，有缺失值   SibSp 兄弟姐妹/配偶在船上 0-8   Pa">
+<meta property="og:image" content="http://yoursite.com/images/output_4_1.png">
+<meta property="og:image" content="http://yoursite.com/images/output_5_1.png">
+<meta property="og:image" content="http://yoursite.com/images/output_6_0.png">
+<meta property="og:image" content="http://yoursite.com/images/output_7_1.png">
+<meta property="og:image" content="http://yoursite.com/images/output_7_2.png">
+<meta property="og:image" content="http://yoursite.com/images/output_7_3.png">
+<meta property="og:image" content="http://yoursite.com/images/output_8_0.png">
+<meta property="og:image" content="http://yoursite.com/images/output_8_1.png">
+<meta property="og:image" content="http://yoursite.com/images/output_10_1.png">
+<meta property="og:image" content="http://yoursite.com/images/result_table.png">
+<meta property="og:image" content="http://yoursite.com/images/kaggle_result.png">
+<meta property="og:updated_time" content="2017-04-25T15:37:03.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kaggle实战——泰坦尼克号生还预测">
+<meta name="twitter:description" content="数据分析train.csv的属性有：    属性名 定义 取值     PassengerId 乘客编号 1-891   Suvived 生还情况 0, 1   Pclass 票的等级 1,2,3   Name 乘客姓名 Braund, Mr. Owen Harris   Sex 性别 male，female   Age 年龄 数字，有缺失值   SibSp 兄弟姐妹/配偶在船上 0-8   Pa">
+<meta name="twitter:image" content="http://yoursite.com/images/output_4_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/25/kaggle实战——泰坦尼克号生还预测/"/>
+
+
+
+
+
+  <title> Kaggle实战——泰坦尼克号生还预测 | MasterVan的个人博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e8c5a47ce76fe9df2d7a019cfcb6254d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">MasterVan的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/25/kaggle实战——泰坦尼克号生还预测/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="MasterVan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="MasterVan的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Kaggle实战——泰坦尼克号生还预测
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-25T23:01:13+08:00">
+                2017-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据挖掘/" itemprop="url" rel="index">
+                    <span itemprop="name">数据挖掘</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/25/kaggle实战——泰坦尼克号生还预测/" class="leancloud_visitors" data-flag-title="Kaggle实战——泰坦尼克号生还预测">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h2><p>train.csv的属性有：</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>定义</th>
+<th>取值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PassengerId</td>
+<td>乘客编号</td>
+<td>1-891</td>
+</tr>
+<tr>
+<td>Suvived</td>
+<td>生还情况</td>
+<td>0, 1</td>
+</tr>
+<tr>
+<td>Pclass</td>
+<td>票的等级</td>
+<td>1,2,3</td>
+</tr>
+<tr>
+<td>Name</td>
+<td>乘客姓名</td>
+<td>Braund, Mr. Owen Harris</td>
+</tr>
+<tr>
+<td>Sex</td>
+<td>性别</td>
+<td>male，female</td>
+</tr>
+<tr>
+<td>Age</td>
+<td>年龄</td>
+<td>数字，有缺失值</td>
+</tr>
+<tr>
+<td>SibSp</td>
+<td>兄弟姐妹/配偶在船上</td>
+<td>0-8</td>
+</tr>
+<tr>
+<td>Parch</td>
+<td>父母/子女在船上</td>
+<td>0-6</td>
+</tr>
+<tr>
+<td>Ticket</td>
+<td>船票编号</td>
+<td>A/5 21171</td>
+</tr>
+<tr>
+<td>Fare</td>
+<td>票价</td>
+<td>7.25</td>
+</tr>
+<tr>
+<td>Cabin</td>
+<td>船舱号</td>
+<td>C85，有缺失值</td>
+</tr>
+<tr>
+<td>Embark</td>
+<td>登船港</td>
+<td>S,C,Q</td>
+</tr>
+</tbody>
+</table>
+<p>test.csv缺少Survived字段，也是需要我们预测的</p>
+<h2 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> warnings</div><div class="line">warnings.filterwarnings(<span class="string">'ignore'</span>)</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</div><div class="line">%matplotlib inline</div></pre></td></tr></table></figure>
+<h3 id="预览数据"><a href="#预览数据" class="headerlink" title="预览数据"></a>预览数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">train = pd.read_csv(<span class="string">"train.csv"</span>)</div><div class="line">test = pd.read_csv(<span class="string">'test.csv'</span>)</div><div class="line">train.info()</div></pre></td></tr></table></figure>
+<pre><code>&lt;class &apos;pandas.core.frame.DataFrame&apos;&gt;
+RangeIndex: 891 entries, 0 to 890
+Data columns (total 12 columns):
+PassengerId    891 non-null int64
+Survived       891 non-null int64
+Pclass         891 non-null int64
+Name           891 non-null object
+Sex            891 non-null object
+Age            714 non-null float64
+SibSp          891 non-null int64
+Parch          891 non-null int64
+Ticket         891 non-null object
+Fare           891 non-null float64
+Cabin          204 non-null object
+Embarked       889 non-null object
+dtypes: float64(2), int64(5), object(5)
+memory usage: 83.6+ KB
+</code></pre><a id="more"></a>
+<h3 id="定义dummies函数"><a href="#定义dummies函数" class="headerlink" title="定义dummies函数"></a>定义dummies函数</h3><p>dummies函数可将某个离散型特征的所有取值变为one-hot编码<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">dummies</span><span class="params">(col,train,test)</span>:</span></div><div class="line">    train_dum = pd.get_dummies(train[col])</div><div class="line">    test_dum = pd.get_dummies(test[col])</div><div class="line">    train = pd.concat([train, train_dum], axis=<span class="number">1</span>)</div><div class="line">    test = pd.concat([test,test_dum],axis=<span class="number">1</span>)</div><div class="line">    train.drop(col,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">    test.drop(col,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">    <span class="keyword">return</span> train, test</div></pre></td></tr></table></figure></p>
+<h3 id="删除无用特征"><a href="#删除无用特征" class="headerlink" title="删除无用特征"></a>删除无用特征</h3><p>删除PassengerId，Name, Ticket<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># get rid of the useless cols</div><div class="line">dropping = [&apos;PassengerId&apos;, &apos;Name&apos;, &apos;Ticket&apos;]</div><div class="line">train.drop(dropping,axis=1, inplace=True)</div><div class="line">test.drop(dropping,axis=1, inplace=True)</div></pre></td></tr></table></figure></p>
+<h3 id="Pclass处理"><a href="#Pclass处理" class="headerlink" title="Pclass处理"></a>Pclass处理</h3><p>观察Pclass和survived的关系，等级越高，生还率越大<br>将Pclass分解为1,2,3三个特征<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">print(train.Pclass.value_counts())</div><div class="line">sns.factorplot(<span class="string">"Pclass"</span>,<span class="string">'Survived'</span>,data=train,order=[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</div><div class="line"></div><div class="line">train, test = dummies(<span class="string">'Pclass'</span>,train,test)</div></pre></td></tr></table></figure></p>
+<pre><code>3    491
+1    216
+2    184
+Name: Pclass, dtype: int64
+</code></pre><p><img src="/images/output_4_1.png" alt="png"></p>
+<h3 id="Sex处理"><a href="#Sex处理" class="headerlink" title="Sex处理"></a>Sex处理</h3><p>观察Sex和Survived的关系，女性生还率显著高于男性<br>分解Sex为male，female，并删除原特征<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print(train.Sex.value_counts(dropna=<span class="keyword">False</span>))</div><div class="line">sns.factorplot(<span class="string">'Sex'</span>,<span class="string">'Survived'</span>,data=train)</div><div class="line">train,test = dummies(<span class="string">'Sex'</span>,train,test)</div><div class="line">train.drop(<span class="string">'male'</span>,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">test.drop(<span class="string">'male'</span>,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>male      577
+female    314
+Name: Sex, dtype: int64
+</code></pre><p><img src="/images/output_5_1.png" alt="png"></p>
+<h3 id="Age处理"><a href="#Age处理" class="headerlink" title="Age处理"></a>Age处理</h3><p>处理缺失值，计算平均值和方差，对缺失值进行填充<br>观察Age和Survived的关系，在15到30区间对结果影响较大，增加两个特征，Age小于15和Age大于15且小于30，删除Age</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">nan_num = len(train[train[<span class="string">'Age'</span>].isnull()])</div><div class="line">age_mean = train[<span class="string">'Age'</span>].mean()</div><div class="line">age_std = train[<span class="string">'Age'</span>].std()</div><div class="line">filling = np.random.randint(age_mean-age_std,age_mean+age_std,size=nan_num)</div><div class="line">train[<span class="string">'Age'</span>][train[<span class="string">'Age'</span>].isnull()==<span class="keyword">True</span>] = filling</div><div class="line">nan_num = train[<span class="string">'Age'</span>].isnull().sum()</div><div class="line"><span class="comment"># dealing the missing val in test</span></div><div class="line">nan_num = test[<span class="string">'Age'</span>].isnull().sum()</div><div class="line"><span class="comment"># 86 null</span></div><div class="line">age_mean = test[<span class="string">'Age'</span>].mean()</div><div class="line">age_std = test[<span class="string">'Age'</span>].std()</div><div class="line">filling = np.random.randint(age_mean-age_std,age_mean+age_std,size=nan_num)</div><div class="line">test[<span class="string">'Age'</span>][test[<span class="string">'Age'</span>].isnull()==<span class="keyword">True</span>]=filling</div><div class="line">nan_num = test[<span class="string">'Age'</span>].isnull().sum()</div><div class="line"></div><div class="line">s = sns.FacetGrid(train,hue=<span class="string">'Survived'</span>,aspect=<span class="number">2</span>)</div><div class="line">s.map(sns.kdeplot,<span class="string">'Age'</span>,shade=<span class="keyword">True</span>)</div><div class="line">s.set(xlim=(<span class="number">0</span>,train[<span class="string">'Age'</span>].max()))</div><div class="line">s.add_legend()</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">under15</span><span class="params">(row)</span>:</span></div><div class="line">    result = <span class="number">0.0</span></div><div class="line">    <span class="keyword">if</span> row&lt;<span class="number">15</span>:</div><div class="line">        result = <span class="number">1.0</span></div><div class="line">    <span class="keyword">return</span> result</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">young</span><span class="params">(row)</span>:</span></div><div class="line">    result = <span class="number">0.0</span></div><div class="line">    <span class="keyword">if</span> row&gt;=<span class="number">15</span> <span class="keyword">and</span> row&lt;<span class="number">30</span>:</div><div class="line">        result = <span class="number">1.0</span></div><div class="line">    <span class="keyword">return</span> result</div><div class="line">train[<span class="string">'under15'</span>] = train[<span class="string">'Age'</span>].apply(under15)</div><div class="line">train[<span class="string">'young'</span>] = train[<span class="string">'Age'</span>].apply(young)</div><div class="line">test[<span class="string">'under15'</span>] = test[<span class="string">'Age'</span>].apply(under15)</div><div class="line">test[<span class="string">'young'</span>] = test[<span class="string">'Age'</span>].apply(young)</div><div class="line"></div><div class="line">train.drop(<span class="string">'Age'</span>,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">test.drop(<span class="string">'Age'</span>,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<p><img src="/images/output_6_0.png" alt="png"></p>
+<h3 id="SibSp和Parch处理"><a href="#SibSp和Parch处理" class="headerlink" title="SibSp和Parch处理"></a>SibSp和Parch处理</h3><p>发现两者值越大，生还率越低<br>生成组合特征family = SibSp+Parch，删除原特征</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> (train.SibSp.value_counts(dropna=<span class="keyword">False</span>))</div><div class="line"><span class="keyword">print</span> (train.Parch.value_counts(dropna=<span class="keyword">False</span>))</div><div class="line">sns.factorplot(<span class="string">'SibSp'</span>,<span class="string">'Survived'</span>,data=train,size=<span class="number">5</span>)</div><div class="line">sns.factorplot(<span class="string">'Parch'</span>,<span class="string">'Survived'</span>,data=train,szie=<span class="number">5</span>)</div><div class="line"></div><div class="line">train[<span class="string">'family'</span>] = train[<span class="string">'SibSp'</span>] +  train[<span class="string">'Parch'</span>]</div><div class="line">test[<span class="string">'family'</span>] = test[<span class="string">'SibSp'</span>] + test[<span class="string">'Parch'</span>]</div><div class="line">sns.factorplot(<span class="string">'family'</span>,<span class="string">'Survived'</span>,data=train,size=<span class="number">5</span>)</div><div class="line"></div><div class="line">train.drop([<span class="string">'SibSp'</span>,<span class="string">'Parch'</span>],axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">test.drop([<span class="string">'SibSp'</span>,<span class="string">'Parch'</span>],axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure>
+<pre><code>0    608
+1    209
+2     28
+4     18
+3     16
+8      7
+5      5
+Name: SibSp, dtype: int64
+0    678
+1    118
+2     80
+5      5
+3      5
+4      4
+6      1
+Name: Parch, dtype: int64
+</code></pre><p><img src="/images/output_7_1.png" alt="png"></p>
+<p><img src="/images/output_7_2.png" alt="png"></p>
+<p><img src="/images/output_7_3.png" alt="png"></p>
+<h3 id="Fare处理"><a href="#Fare处理" class="headerlink" title="Fare处理"></a>Fare处理</h3><p>票价高的生还率较大，test里有一个缺失值，用均值填充<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">train.Fare.isnull().sum()</div><div class="line">test.Fare.isnull().sum()</div><div class="line"></div><div class="line">sns.factorplot(<span class="string">'Survived'</span>,<span class="string">'Fare'</span>,data=train,size=<span class="number">4</span>)</div><div class="line">s = sns.FacetGrid(train,hue=<span class="string">'Survived'</span>,aspect=<span class="number">2</span>)</div><div class="line">s.map(sns.kdeplot,<span class="string">'Fare'</span>,shade=<span class="keyword">True</span>)</div><div class="line">s.set(xlim=(<span class="number">0</span>,train[<span class="string">'Fare'</span>].max()))</div><div class="line">s.add_legend()</div><div class="line"></div><div class="line">test[<span class="string">'Fare'</span>].fillna(test[<span class="string">'Fare'</span>].median(),inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure></p>
+<p><img src="/images/output_8_0.png" alt="png"></p>
+<p><img src="/images/output_8_1.png" alt="png"></p>
+<h3 id="Cabin处理"><a href="#Cabin处理" class="headerlink" title="Cabin处理"></a>Cabin处理</h3><p>缺失值过多，删除该特征<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Cabin</span></div><div class="line"><span class="keyword">print</span> train.Cabin.isnull().sum()</div><div class="line"><span class="keyword">print</span> test.Cabin.isnull().sum()</div><div class="line"></div><div class="line">train.drop(<span class="string">'Cabin'</span>,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">test.drop(<span class="string">'Cabin'</span>,axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>687
+327
+</code></pre><h3 id="Embarked处理"><a href="#Embarked处理" class="headerlink" title="Embarked处理"></a>Embarked处理</h3><p>训练集有两个缺失值，S出现最多，用S进行填充<br>观察发现C港口的乘客生还率较高，分解Embarked为S, Q, C<br>删除S，Q，Embarked. 保留C作为新特征<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#Embarked</span></div><div class="line"><span class="keyword">print</span> train.Embarked.isnull().sum()</div><div class="line"><span class="keyword">print</span> test.Embarked.isnull().sum()</div><div class="line"></div><div class="line"><span class="keyword">print</span> train[<span class="string">'Embarked'</span>].value_counts(dropna=<span class="keyword">False</span>)</div><div class="line">train[<span class="string">'Embarked'</span>].fillna(<span class="string">'S'</span>,inplace=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">sns.factorplot(<span class="string">'Embarked'</span>,<span class="string">'Survived'</span>,data=train,size=<span class="number">5</span>)</div><div class="line"></div><div class="line">train,test = dummies(<span class="string">'Embarked'</span>,train,test)</div><div class="line">train.drop([<span class="string">'S'</span>,<span class="string">'Q'</span>],axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div><div class="line">test.drop([<span class="string">'S'</span>,<span class="string">'Q'</span>],axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>2
+0
+S      644
+C      168
+Q       77
+NaN      2
+Name: Embarked, dtype: int64
+</code></pre><p><img src="/images/output_10_1.png" alt="png"></p>
+<h2 id="训练模型"><a href="#训练模型" class="headerlink" title="训练模型"></a>训练模型</h2><h3 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h3><p>主要用逻辑回归，随机森林，支持向量机和k近邻</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</div><div class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC, LinearSVC</div><div class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier,GradientBoostingClassifier</div><div class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</div><div class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> GaussianNB</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score</div><div class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> cross_val_score, KFold</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">modeling</span><span class="params">(clf,ft,target)</span>:</span></div><div class="line">    acc = cross_val_score(clf,ft,target,cv=kf)</div><div class="line">    acc_lst.append(acc.mean())</div><div class="line">    <span class="keyword">return</span> </div><div class="line"></div><div class="line">accuracy = []</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">ml</span><span class="params">(ft,target,time)</span>:</span></div><div class="line">    accuracy.append(acc_lst)</div><div class="line">     <span class="comment">#logisticregression</span></div><div class="line">    logreg = LogisticRegression()</div><div class="line">    modeling(logreg,ft,target)</div><div class="line">    <span class="comment">#RandomForest</span></div><div class="line">    rf = RandomForestClassifier(n_estimators=<span class="number">50</span>,min_samples_split=<span class="number">4</span>,min_samples_leaf=<span class="number">2</span>)</div><div class="line">    modeling(rf,ft,target)</div><div class="line">    <span class="comment">#svc</span></div><div class="line">    svc = SVC()</div><div class="line">    modeling(svc,ft,target)</div><div class="line">    <span class="comment">#knn</span></div><div class="line">    knn = KNeighborsClassifier(n_neighbors = <span class="number">3</span>)</div><div class="line">    modeling(knn,ft,target)</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="comment"># see the coefficient</span></div><div class="line">    logreg.fit(ft,target)</div><div class="line">    feature = pd.DataFrame(ft.columns)</div><div class="line">    feature.columns = [<span class="string">'Features'</span>]</div><div class="line">    feature[<span class="string">"Coefficient Estimate"</span>] = pd.Series(logreg.coef_[<span class="number">0</span>])</div><div class="line">    print(feature)</div><div class="line">    <span class="keyword">return</span></div></pre></td></tr></table></figure>
+<h3 id="使用不同特征组合方案"><a href="#使用不同特征组合方案" class="headerlink" title="使用不同特征组合方案"></a>使用不同特征组合方案</h3><p>1.使用全部特征</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#test1</span></div><div class="line">train_ft = train.drop(<span class="string">'Survived'</span>,axis=<span class="number">1</span>)</div><div class="line">train_y = train[<span class="string">'Survived'</span>]</div><div class="line"></div><div class="line">kf = KFold(n_splits=<span class="number">3</span>,random_state=<span class="number">1</span>)</div><div class="line">acc_lst = []</div><div class="line">ml(train_ft,train_y,<span class="string">'test_1'</span>)</div></pre></td></tr></table></figure>
+<pre><code>  Features  Coefficient Estimate
+0     Fare              0.004240
+1        1              0.389135
+2        2             -0.211795
+3        3             -1.210494
+4   female              2.689013
+5  under15              1.658023
+6    young              0.030681
+7   family             -0.310545
+8        C              0.374100
+</code></pre><p>2.删除young</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># testing 2, lose young</span></div><div class="line">train_ft_2=train.drop([<span class="string">'Survived'</span>,<span class="string">'young'</span>],axis=<span class="number">1</span>)</div><div class="line">test_2 = test.drop(<span class="string">'young'</span>,axis=<span class="number">1</span>)</div><div class="line">train_ft.head()</div><div class="line"></div><div class="line"><span class="comment"># ml</span></div><div class="line">kf = KFold(n_splits=<span class="number">3</span>,random_state=<span class="number">1</span>)</div><div class="line">acc_lst=[]</div><div class="line">ml(train_ft_2,train_y,<span class="string">'test_2'</span>)</div></pre></td></tr></table></figure>
+<pre><code>  Features  Coefficient Estimate
+0     Fare              0.004285
+1        1              0.386195
+2        2             -0.207867
+3        3             -1.202922
+4   female              2.690898
+5  under15              1.645827
+6   family             -0.311682
+7        C              0.376629
+</code></pre><p>3.删除young，C<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#test3, lose young, c</span></div><div class="line">train_ft_3=train.drop([<span class="string">'Survived'</span>,<span class="string">'young'</span>,<span class="string">'C'</span>],axis=<span class="number">1</span>)</div><div class="line">test_3 = test.drop([<span class="string">'young'</span>,<span class="string">'C'</span>],axis=<span class="number">1</span>)</div><div class="line">train_ft.head()</div><div class="line"></div><div class="line"><span class="comment"># ml</span></div><div class="line">kf = KFold(n_splits=<span class="number">3</span>,random_state=<span class="number">1</span>)</div><div class="line">acc_lst = []</div><div class="line">ml(train_ft_3,train_y,<span class="string">'test_3'</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>  Features  Coefficient Estimate
+0     Fare              0.004920
+1        1              0.438557
+2        2             -0.225821
+3        3             -1.194444
+4   female              2.694665
+5  under15              1.679459
+6   family             -0.322922
+</code></pre><p>4.删除Fare<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># test4, no FARE</span></div><div class="line">train_ft_4=train.drop([<span class="string">'Survived'</span>,<span class="string">'Fare'</span>],axis=<span class="number">1</span>)</div><div class="line">test_4 = test.drop([<span class="string">'Fare'</span>],axis=<span class="number">1</span>)</div><div class="line">train_ft.head()</div><div class="line"><span class="comment"># ml</span></div><div class="line">kf = KFold(n_splits=<span class="number">3</span>,random_state=<span class="number">1</span>)</div><div class="line">acc_lst = []</div><div class="line">ml(train_ft_4,train_y,<span class="string">'test_4'</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>  Features  Coefficient Estimate
+0        1              0.564754
+1        2             -0.242384
+2        3             -1.287715
+3   female              2.699738
+4  under15              1.629584
+5    young              0.058133
+6   family             -0.269146
+7        C              0.436600
+</code></pre><p>5.删除C<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># test5, get rid of c </span></div><div class="line">train_ft_5=train.drop([<span class="string">'Survived'</span>,<span class="string">'C'</span>],axis=<span class="number">1</span>)</div><div class="line">test_5 = test.drop(<span class="string">'C'</span>,axis=<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># ml</span></div><div class="line">kf = KFold(n_splits=<span class="number">3</span>,random_state=<span class="number">1</span>)</div><div class="line">acc_lst = []</div><div class="line">ml(train_ft_5,train_y,<span class="string">'test_5'</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>  Features  Coefficient Estimate
+0     Fare              0.004841
+1        1              0.442430
+2        2             -0.232150
+3        3             -1.207308
+4   female              2.691465
+5  under15              1.700077
+6    young              0.052091
+7   family             -0.320831
+</code></pre><p>6.删除Fare和young<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># test6, lose Fare and young</span></div><div class="line">train_ft_6=train.drop([<span class="string">'Survived'</span>,<span class="string">'Fare'</span>,<span class="string">'young'</span>],axis=<span class="number">1</span>)</div><div class="line">test_6 = test.drop([<span class="string">'Fare'</span>,<span class="string">'young'</span>],axis=<span class="number">1</span>)</div><div class="line">train_ft.head()</div><div class="line"><span class="comment"># ml</span></div><div class="line">kf = KFold(n_splits=<span class="number">3</span>,random_state=<span class="number">1</span>)</div><div class="line">acc_lst = []</div><div class="line">ml(train_ft_6,train_y,<span class="string">'test_6'</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>  Features  Coefficient Estimate
+0        1              0.562814
+1        2             -0.235606
+2        3             -1.274657
+3   female              2.702955
+4  under15              1.604597
+5   family             -0.270284
+6        C              0.442288
+</code></pre><h3 id="结果汇总"><a href="#结果汇总" class="headerlink" title="结果汇总"></a>结果汇总</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">accuracy_df=pd.DataFrame(data=accuracy,</div><div class="line">                         index=[&apos;test1&apos;,&apos;test2&apos;,&apos;test3&apos;,&apos;test4&apos;,&apos;test5&apos;,&apos;test6&apos;],</div><div class="line">                         columns=[&apos;logistic&apos;,&apos;rf&apos;,&apos;svc&apos;,&apos;knn&apos;])</div><div class="line">accuracy_df</div></pre></td></tr></table></figure>
+<p><img src="/images/result_table.png" alt="table"></p>
+<h3 id="确定模型和特征"><a href="#确定模型和特征" class="headerlink" title="确定模型和特征"></a>确定模型和特征</h3><p>综合来看，test_4和支持向量机的表现最好，所以用该模型进行预测<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">svc = SVC()</div><div class="line">svc.fit(train_ft_4,train_y)</div><div class="line">svc_pred = svc.predict(test_4)</div><div class="line">print(svc.score(train_ft_4,train_y))</div><div class="line"></div><div class="line">submission_test = pd.read_csv(<span class="string">"test.csv"</span>)</div><div class="line">submission = pd.DataFrame(&#123;<span class="string">"PassengerId"</span>:submission_test[<span class="string">'PassengerId'</span>],</div><div class="line">                          <span class="string">"Survived"</span>:svc_pred&#125;)</div><div class="line">submission.to_csv(<span class="string">"kaggle_SVC.csv"</span>,index=<span class="keyword">False</span>)</div></pre></td></tr></table></figure></p>
+<pre><code>0.832772166105
+</code></pre><h3 id="结果提交"><a href="#结果提交" class="headerlink" title="结果提交"></a>结果提交</h3><p><img src="/images/kaggle_result.png" alt="png"></p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://www.kaggle.com/wei10117/titanic/titanic-machine-learning-from-disaster" target="_blank" rel="external">Titanic: Machine Learning from Disaster</a></p>
+<p><a href="https://www.kaggle.com/wikaiqi/titanic/titaniclearningqi" target="_blank" rel="external">TitanicLearningQI</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kaggle/" rel="tag"># Kaggle</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/24/特征工程/" rel="prev" title="特征工程">
+                特征工程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODMxOS80ODkx"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="MasterVan" />
+          <p class="site-author-name" itemprop="name">MasterVan</p>
+           
+              <p class="site-description motion-element" itemprop="description">狭小房间里的堂吉诃德</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据分析"><span class="nav-number">1.</span> <span class="nav-text">数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据预处理"><span class="nav-number">2.</span> <span class="nav-text">数据预处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#预览数据"><span class="nav-number">2.1.</span> <span class="nav-text">预览数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#定义dummies函数"><span class="nav-number">2.2.</span> <span class="nav-text">定义dummies函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除无用特征"><span class="nav-number">2.3.</span> <span class="nav-text">删除无用特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pclass处理"><span class="nav-number">2.4.</span> <span class="nav-text">Pclass处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sex处理"><span class="nav-number">2.5.</span> <span class="nav-text">Sex处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Age处理"><span class="nav-number">2.6.</span> <span class="nav-text">Age处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SibSp和Parch处理"><span class="nav-number">2.7.</span> <span class="nav-text">SibSp和Parch处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fare处理"><span class="nav-number">2.8.</span> <span class="nav-text">Fare处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cabin处理"><span class="nav-number">2.9.</span> <span class="nav-text">Cabin处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Embarked处理"><span class="nav-number">2.10.</span> <span class="nav-text">Embarked处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#训练模型"><span class="nav-number">3.</span> <span class="nav-text">训练模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#模型选择"><span class="nav-number">3.1.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用不同特征组合方案"><span class="nav-number">3.2.</span> <span class="nav-text">使用不同特征组合方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果汇总"><span class="nav-number">3.3.</span> <span class="nav-text">结果汇总</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确定模型和特征"><span class="nav-number">3.4.</span> <span class="nav-text">确定模型和特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果提交"><span class="nav-number">3.5.</span> <span class="nav-text">结果提交</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">3.6.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">MasterVan</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      本站访客数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人
+    </span>
+  
+
+  
+    <span class="site-pv">
+      本站总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("GHLVDDXiklwR3b0Kjlh2abFQ-gzGzoHsz", "sFwhXvksE0Q8HV4LrD1TSAyV");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
